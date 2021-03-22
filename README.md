@@ -1,4 +1,4 @@
-# Diffreaction Patterns
+# Diffraction Patterns
 
 This script uses a specified function for the transmission of the electric field in he $x$, $y$ plane. The Fraunhoffer diffreaction pattern is the calcultated and plotted using matplotlib. 
 
