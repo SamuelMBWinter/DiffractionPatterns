@@ -2,6 +2,10 @@ import numpy as np
 from scipy.fft import fft2, fftfreq, fftshift
 import matplotlib.pyplot as plt
 
+k = 2*np.pi / (5.5*10**(-5))
+z = 100
+
+
 # Dimensions in cm
 a = 0.01
 d = 0.04
@@ -60,12 +64,11 @@ def ring(x, y):
     else:
         return 0
 
-
-    
-
 # Grid in the plan of the aperture
 x_in = np.linspace(-2, 2, 1000)
+dx = (max(x_in)- min(x_in))/ len(x_in)
 y_in = np.linspace(-2, 2, 1000)
+dy = (max(y_in)- min(y_in))/ len(y_in)
 x_in, y_in = np.meshgrid(x_in, y_in)
 grid_in = np.vstack((x_in.flatten(), y_in.flatten())).T
 
@@ -74,8 +77,11 @@ E_in = np.array([E_0 * triple_sq(g[0], g[1]) for g in grid_in ])
 E_in = np.reshape(E_in, (len(x_in), len(y_in)))
 
 # The output frequencies
-X_out = fftshift(fftfreq(len(x_in), 1000))
-Y_out = fftshift(fftfreq(len(y_in), 1000))
+X_out = fftshift(fftfreq(len(x_in), dx))
+Y_out = fftshift(fftfreq(len(y_in), dy))
+
+X_out *= z/k
+Y_out *= z/k
 
 E_out = fftshift(fft2(E_in))
 I_out = np.power(np.abs(E_out), 2)
