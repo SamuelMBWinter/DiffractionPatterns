@@ -16,7 +16,7 @@ E_0 = 1
 # Transmission Functions
 ## Square aperture of width a centred at the origin
 def aperture_sq(x, y):
-    a = 0.01
+    a = 0.1
     if np.abs(x) <= a/2 and np.abs(y) <= a/2:
         return 1
     else:
@@ -73,7 +73,7 @@ x_in, y_in = np.meshgrid(x_in, y_in)
 grid_in = np.vstack((x_in.flatten(), y_in.flatten())).T
 
 # The Electric field in the plane of the aperture
-E_in = np.array([E_0 * triple_sq(g[0], g[1]) for g in grid_in ])
+E_in = np.array([E_0 * aperture_sq(g[0], g[1]) for g in grid_in ])
 E_in = np.reshape(E_in, (len(x_in), len(y_in)))
 
 # The output frequencies
